@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<routes xmlns="http://symfony.com/schema/routing"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://symfony.com/schema/routing
+        https://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <route id="cowegis_api_docs_index" path="/docs" controller="Cowegis\Bundle\Api\Action\DocsAction" methods="GET" >
+        <default key="_cowegis">docs</default>
+    </route>
+
+    <route id="cowegis_api_docs_schema" path="/docs/schema.json" controller="Cowegis\Bundle\Api\Action\SchemaAction" methods="GET">
+        <default key="_cowegis">docs</default>
+    </route>
+
+    <route id="cowegis_api_map" path="/api/map/{mapId}" controller="Cowegis\Bundle\Api\Action\MapAction" methods="GET">
+        <default key="_cowegis">api</default>
+    </route>
+
+    <route id="cowegis_api_layer_data" path="/api/map/{mapId}/{type}/{layerId}" controller="Cowegis\Bundle\Api\Action\LayerDataAction" methods="GET">
+        <default key="_cowegis">api</default>
+    </route>
+
+    <route id="cowegis_api_js_map_callbacks" path="/js/callbacks/{mapId}.js" controller="Cowegis\Bundle\Api\Action\MapCallbacksAction" methods="GET">
+        <default key="_cowegis">api</default>
+    </route>
+
+    <route id="cowegis_api_js_layer_callbacks" path="/js/callbacks/{mapId}/{layerId}.js" controller="Cowegis\Bundle\Api\Action\LayerCallbacksAction" methods="GET">
+        <default key="_cowegis">api</default>
+    </route>
+
+</routes>

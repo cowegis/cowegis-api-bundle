@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+        https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <defaults autowire="false" autoconfigure="false" public="false"/>
+
+        <service id="Cowegis\Core\Serializer\Serializer" class="Cowegis\Core\Serializer\DelegatingSerializer">
+            <argument type="tagged_locator" tag="Cowegis\Core\Serializer\Serializer" index-by="key" />
+        </service>
+
+        <service id="Cowegis\Core\Serializer\EventDispatchingSerializer" decorates="Cowegis\Core\Serializer\Serializer">
+            <argument type="service" id="Cowegis\Core\Serializer\EventDispatchingSerializer.inner" />
+            <argument type="service" id="event_dispatcher" />
+        </service>
+
+        <service id="Cowegis\Core\Serializer\ArraySerializer">
+            <argument type="service" id="Cowegis\Core\Serializer\Serializer" />
+            <tag name="Cowegis\Core\Serializer\Serializer" key="array" />
+            <tag name="Cowegis\Core\Serializer\Serializer" key="ArrayObject" />
+        </service>
+
+        <service id="Cowegis\Core\Serializer\MapSerializer">
+            <argument type="service" id="Cowegis\Core\Serializer\Serializer" />
+            <tag name="Cowegis\Core\Serializer\Serializer" key="Cowegis\Core\Definition\Map\Map" />
+        </service>
+
+        <service id="Cowegis\Core\Serializer\PresetsSerializer">
+            <argument type="service" id="Cowegis\Core\Serializer\Serializer" />
+            <tag name="Cowegis\Core\Serializer\Serializer" key="Cowegis\Core\Definition\Map\Presets" />
+        </service>
+
+        <service id="Cowegis\Core\Serializer\PopupPresetSerializer">
+            <argument type="service" id="Cowegis\Core\Serializer\Serializer" />
+            <tag name="Cowegis\Core\Serializer\Serializer" key="Cowegis\Core\Definition\Preset\PopupPreset" />
+        </service>
+
+        <service id="Cowegis\Core\Serializer\OptionsSerializer">
+            <argument type="service" id="Cowegis\Core\Serializer\Serializer" />
+            <tag name="Cowegis\Core\Serializer\Serializer" key="Cowegis\Core\Definition\Options" />
+        </service>
+
+        <service id="Cowegis\Core\Serializer\PopupSerializer">
+            <argument type="service" id="Cowegis\Core\Serializer\Serializer" />
+            <tag name="Cowegis\Core\Serializer\Serializer" key="Cowegis\Core\Definition\UI\Popup" />
+        </service>
+
+        <service id="cowegis.core.serializer.div_icon_serializer" class="Cowegis\Core\Serializer\IconSerializer">
+            <argument>div</argument>
+            <argument type="service" id="Cowegis\Core\Serializer\Serializer" />
+            <tag name="Cowegis\Core\Serializer\Serializer" key="Cowegis\Core\Definition\Icon\DivIcon" />
+        </service>
+
+        <service id="cowegis.core.serializer.image_icon_serializer" class="Cowegis\Core\Serializer\IconSerializer">
+            <argument>image</argument>
+            <argument type="service" id="Cowegis\Core\Serializer\Serializer" />
+            <tag name="Cowegis\Core\Serializer\Serializer" key="Cowegis\Core\Definition\Icon\ImageIcon" />
+        </service>
+
+        <service id="cowegis.core.serializer.svg_icon_serializer" class="Cowegis\Core\Serializer\IconSerializer">
+            <argument>svg</argument>
+            <argument type="service" id="Cowegis\Core\Serializer\Serializer" />
+            <tag name="Cowegis\Core\Serializer\Serializer" key="Cowegis\Core\Definition\Icon\SvgIcon" />
+        </service>
+
+        <service id="cowegis.core.serializer.font_awesome_icon_serializer" class="Cowegis\Core\Serializer\IconSerializer">
+            <argument>fontAwesome</argument>
+            <argument type="service" id="Cowegis\Core\Serializer\Serializer" />
+            <tag name="Cowegis\Core\Serializer\Serializer" key="Cowegis\Core\Definition\Icon\FontAwesomeIcon" />
+        </service>
+
+        <service id="Cowegis\Core\Serializer\Layer\MarkerClusterGroupSerializer">
+            <argument type="service" id="Cowegis\Core\Serializer\Serializer" />
+            <tag name="Cowegis\Core\Serializer\Serializer" key="Cowegis\Core\Definition\Layer\MarkerClusterGroup" />
+        </service>
+
+        <service id="Cowegis\Core\Serializer\Layer\LayerIdsSerializer">
+            <argument type="service" id="Cowegis\Core\Serializer\Serializer" />
+            <tag name="Cowegis\Core\Serializer\Serializer" key="Cowegis\Core\Definition\Layer\LayerIds" />
+        </service>
+
+        <service id="Cowegis\Core\Serializer\Layer\FeatureGroupSerializer">
+            <argument type="service" id="Cowegis\Core\Serializer\Serializer" />
+            <tag name="Cowegis\Core\Serializer\Serializer" key="Cowegis\Core\Definition\Layer\FeatureGroup" />
+        </service>
+
+        <service id="Cowegis\Core\Serializer\Layer\LayerGroupSerializer">
+            <argument type="service" id="Cowegis\Core\Serializer\Serializer" />
+            <tag name="Cowegis\Core\Serializer\Serializer" key="Cowegis\Core\Definition\Layer\LayerGroup" />
+        </service>
+
+        <service id="Cowegis\Core\Serializer\Layer\OverpassLayerSerializer">
+            <argument type="service" id="Cowegis\Core\Serializer\Serializer" />
+            <tag name="Cowegis\Core\Serializer\Serializer" key="Cowegis\Core\Definition\Layer\OverpassLayer" />
+        </service>
+
+        <service id="Cowegis\Core\Serializer\Layer\ProviderLayerSerializer">
+            <argument type="service" id="Cowegis\Core\Serializer\Serializer" />
+            <tag name="Cowegis\Core\Serializer\Serializer" key="Cowegis\Core\Definition\Layer\ProviderLayer" />
+        </service>
+
+        <service id="Cowegis\Core\Serializer\Control\LayersControlSerializer">
+            <argument type="service" id="Cowegis\Core\Serializer\Serializer" />
+            <tag name="Cowegis\Core\Serializer\Serializer" key="Cowegis\Core\Definition\Control\LayersControl" />
+        </service>
+
+        <service id="Cowegis\Core\Serializer\TooltipSerializer">
+            <argument type="service" id="Cowegis\Core\Serializer\Serializer" />
+            <tag name="Cowegis\Core\Serializer\Serializer" key="Cowegis\Core\Definition\UI\Tooltip" />
+        </service>
+
+        <service id="Cowegis\Core\Serializer\TooltipPresetSerializer">
+            <argument type="service" id="Cowegis\Core\Serializer\Serializer" />
+            <tag name="Cowegis\Core\Serializer\Serializer" key="Cowegis\Core\Definition\Preset\TooltipPreset" />
+        </service>
+    </services>
+</container>

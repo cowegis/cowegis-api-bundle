@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+        https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <defaults autowire="false" autoconfigure="false" public="false"/>
+
+        <!-- Controller -->
+        <service id="Cowegis\Bundle\Api\Action\SchemaAction" public="true">
+            <argument type="service" id="Cowegis\Core\Schema\SchemaDescriber" />
+            <argument type="tagged_iterator" tag="Cowegis\Core\Schema\IdSchema" />
+            <argument>%cowegis_api.api_base_uri%</argument>
+        </service>
+
+        <service id="Cowegis\Bundle\Api\Action\DocsAction" public="true">
+            <argument type="service" id="twig" />
+            <argument type="service" id="router" />
+        </service>
+
+        <service id="Cowegis\Bundle\Api\Action\MapAction" public="true">
+            <argument type="service" id="Cowegis\Core\Provider\Provider" />
+            <argument type="service" id="Cowegis\Core\Filter\FilterFactory" />
+            <argument type="service" id="Cowegis\Core\Serializer\Serializer" />
+            <!-- Todo: Use own uri factory -->
+            <argument type="service" id="psr18.http_client" />
+            <argument type="service" id="router" />
+        </service>
+
+        <service id="Cowegis\Bundle\Api\Action\LayerDataAction" public="true">
+            <argument type="service" id="Cowegis\Core\Provider\Provider" />
+            <argument type="service" id="Cowegis\Core\Filter\FilterFactory" />
+            <argument type="service" id="Cowegis\Core\Serializer\Serializer" />
+            <!-- Todo: Use own uri factory -->
+            <argument type="service" id="psr18.http_client" />
+            <argument type="service" id="router" />
+        </service>
+
+        <service id="Cowegis\Bundle\Api\Action\MapCallbacksAction" public="true">
+            <argument type="service" id="Cowegis\Core\Provider\Provider" />
+            <argument type="service" id="Cowegis\Core\Filter\FilterFactory" />
+            <!-- Todo: Use own uri factory -->
+            <argument type="service" id="psr18.http_client" />
+        </service>
+
+        <service id="Cowegis\Bundle\Api\Action\LayerCallbacksAction" public="true">
+            <argument type="service" id="Cowegis\Core\Provider\Provider" />
+            <argument type="service" id="Cowegis\Core\Filter\FilterFactory" />
+            <!-- Todo: Use own uri factory -->
+            <argument type="service" id="psr18.http_client" />
+        </service>
+
+        <!-- Services -->
+        <service id="Cowegis\Core\Provider\Provider" class="Cowegis\Core\Provider\DelegatingProvider">
+            <argument type="tagged_iterator" tag="Cowegis\Core\Provider\Provider" />
+        </service>
+
+        <!-- Listeners -->
+        <service id="Cowegis\Bundle\Api\EventListener\LocaleListener">
+            <tag name="kernel.event_listener" event="kernel.request" priority="30" />
+        </service>
+
+    </services>
+</container>

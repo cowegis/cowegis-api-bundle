@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+        https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <defaults autowire="false" autoconfigure="false" public="false"/>
+
+        <service id="Cowegis\Core\Schema\SchemaDescriber" class="Cowegis\Core\Schema\DelegatingSchemaDescriber">
+            <argument type="tagged_iterator" tag="Cowegis\Core\Schema\SchemaDescriber" />
+        </service>
+
+        <service id="Cowegis\Core\Schema\MapSchemaDescriber">
+            <argument type="tagged_iterator" tag="Cowegis\Core\Schema\LayerSchemaDescriber" />
+            <argument type="tagged_iterator" tag="Cowegis\Core\Schema\ControlSchemaDescriber" />
+            <tag name="Cowegis\Core\Schema\SchemaDescriber" />
+        </service>
+
+        <service id="Cowegis\Core\Schema\GeoJsonDescriber">
+            <tag name="Cowegis\Core\Schema\SchemaDescriber" />
+        </service>
+
+    </services>
+</container>
