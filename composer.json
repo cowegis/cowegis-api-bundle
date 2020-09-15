@@ -25,6 +25,11 @@
     "doctrine/coding-standard": "^7.0",
     "phpspec/phpspec": "^6.1"
   },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
   "autoload": {
     "psr-4": {
       "Cowegis\\Bundle\\Api\\": "src/"
