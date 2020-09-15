@@ -31,20 +31,27 @@ final class SchemaAction
     /** @var string */
     private $baseUri;
 
-    public function __construct(SchemaDescriber $schemaBuilder, iterable $idSchemas, string $baseUri)
-    {
+    /** @var string */
+    private $apiVersion;
+
+    public function __construct(
+        SchemaDescriber $schemaBuilder,
+        iterable $idSchemas,
+        string $baseUri,
+        string $apiVersion
+    ) {
         $this->schemaBuilder = $schemaBuilder;
         $this->idSchemas     = is_array($idSchemas) ? $idSchemas : iterator_to_array($idSchemas);
         $this->baseUri       = $baseUri;
+        $this->apiVersion    = $apiVersion;
     }
 
     public function __invoke(Request $request) : Response
     {
-        // Fixme: Version number handling
         $info = Info::create()
             ->title('Cowegis API')
             ->description('Cowegis map API')
-            ->version('latest');
+            ->version($this->apiVersion);
 
         $builder = SchemaBuilder::create($info, $this->idSchema(), OpenApi::OPENAPI_3_0_2);
         $this->schemaBuilder->describe($builder);

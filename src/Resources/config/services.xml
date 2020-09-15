@@ -12,6 +12,7 @@
             <argument type="service" id="Cowegis\Core\Schema\SchemaDescriber" />
             <argument type="tagged_iterator" tag="Cowegis\Core\Schema\IdSchema" />
             <argument>%cowegis_api.api_base_uri%</argument>
+            <argument>%cowegis_api.api_version%</argument>
         </service>
 
         <service id="Cowegis\Bundle\Api\Action\DocsAction" public="true">
