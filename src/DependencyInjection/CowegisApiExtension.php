@@ -20,8 +20,10 @@ final class CowegisApiExtension extends Extension
         $loader->load('filter.xml');
         $loader->load('serializer.xml');
 
-        // Fixme: Make me configurable
-        $container->setParameter('cowegis_api.route_prefix', 'cowegis/');
-        $container->setParameter('cowegis_api.api_base_uri', 'cowegis/api');
+        $config = $this->processConfiguration(new Configuration(), $configs);
+        $prefix = ($config['routing']['prefix'] ?? 'cowegis') . '/';
+
+        $container->setParameter('cowegis_api.route_prefix', $prefix);
+        $container->setParameter('cowegis_api.api_base_uri', $prefix . '/api');
     }
 }

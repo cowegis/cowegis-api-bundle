@@ -23,6 +23,14 @@ final class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+                ->arrayNode('routing')
+                    ->children()
+                        ->scalarNode('prefix')
+                            ->info('Route prefix')
+                            ->defaultValue('cowegis')
+                        ->end()
+                    ->end()
+                ->end()
             ->end();
 
         return $builder;
