@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Cowegis\Bundle\Api\EventListener;
 
 use Symfony\Component\HttpKernel\Event\RequestEvent;
-use function dump;
 
 final class LocaleListener
 {
