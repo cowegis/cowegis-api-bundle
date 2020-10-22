@@ -22,13 +22,13 @@ final class DocsAction
         $this->router = $router;
     }
 
-    public function __invoke() : Response
+    public function __invoke(): Response
     {
         return new Response(
             $this->twig->render(
                 '@CowegisApi/index.html.twig',
                 [
-                    'schemaUri' => $this->router->generate('cowegis_api_docs_schema')
+                    'schemaUri' => $this->router->generate('cowegis_api_docs_schema'),
                 ]
             )
         );

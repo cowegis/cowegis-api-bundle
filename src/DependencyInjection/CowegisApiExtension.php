@@ -9,9 +9,24 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
+/**
+ * @psalm-type TProcessedConfig = array{
+ *   api: array{
+ *      prefix: string,
+ *      version: string
+ *   }
+ * }
+ */
 final class CowegisApiExtension extends Extension
 {
-    public function load(array $configs, ContainerBuilder $container) : void
+    /**
+     * @param mixed[][] $configs
+     *
+     * @psalm-param list<array<array-key, mixed>> $configs
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
+     */
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 
@@ -20,6 +35,7 @@ final class CowegisApiExtension extends Extension
         $loader->load('filter.xml');
         $loader->load('serializer.xml');
 
+        /** @psalm-var TProcessedConfig $config */
         $config = $this->processConfiguration(new Configuration(), $configs);
         $prefix = $config['api']['prefix'];
 

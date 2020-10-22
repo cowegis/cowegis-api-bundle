@@ -33,7 +33,7 @@ final class MapCallbacksAction
         $this->uriFactory    = $uriFactory;
     }
 
-    public function __invoke(string $mapId, Request $request) : Response
+    public function __invoke(string $mapId, Request $request): Response
     {
         $mapId   = $this->provider->idFormat()->createDefinitionId(MapId::class, $mapId);
         $filter  = $this->filterFactory->createFromUri($this->uriFactory->createUri($request->getUri()));

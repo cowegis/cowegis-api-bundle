@@ -34,7 +34,7 @@ final class LayerCallbacksAction
         $this->uriFactory    = $uriFactory;
     }
 
-    public function __invoke(string $mapId, string $layerId, Request $request) : Response
+    public function __invoke(string $mapId, string $layerId, Request $request): Response
     {
         $mapId   = $this->provider->idFormat()->createDefinitionId(MapId::class, $mapId);
         $layerId = $this->provider->idFormat()->createDefinitionId(LayerId::class, $layerId);

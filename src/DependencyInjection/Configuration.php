@@ -9,9 +9,9 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 final class Configuration implements ConfigurationInterface
 {
-    public function getConfigTreeBuilder() : TreeBuilder
+    public function getConfigTreeBuilder(): TreeBuilder
     {
-        $builder = new TreeBuilder('cowegis');
+        $builder  = new TreeBuilder('cowegis');
         $rootNode = $builder->getRootNode();
 
         $rootNode
@@ -20,7 +20,8 @@ final class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('version')
-                            ->info('API version. Cowegis has a dynamic API schema caused by the plugin structure. You may force a version')
+                            ->info('API version. Cowegis has a dynamic API schema caused by the plugin structure.'
+                                . ' You may force a version')
                             ->defaultValue('latest')
                         ->end()
                         ->scalarNode('prefix')

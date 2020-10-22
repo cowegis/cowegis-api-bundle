@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 
+use function count;
+
 final class MapAction
 {
     /** @var Provider */
@@ -50,7 +52,7 @@ final class MapAction
         $this->router        = $router;
     }
 
-    public function __invoke(string $mapId, Request $request) : Response
+    public function __invoke(string $mapId, Request $request): Response
     {
         $mapId   = $this->provider->idFormat()->createDefinitionId(MapId::class, $mapId);
         $filter  = $this->filterFactory->createFromUri($this->uriFactory->createUri($request->getUri()));

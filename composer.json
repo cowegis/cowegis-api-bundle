@@ -19,10 +19,17 @@
     "beberlei/assert": "^3.2",
     "cowegis/cowegis-core": "^1.0@dev",
     "goldspecdigital/oooas": "^2.8",
-    "symfony/http-kernel": "^4.4"
+    "psr/http-factory": "^1.0",
+    "psr/http-message": "^1.0",
+    "symfony/config": "^4.4",
+    "symfony/dependency-injection": "^4.4",
+    "symfony/http-foundation": "^4.4",
+    "symfony/http-kernel": "^4.4",
+    "symfony/routing": "^4.4",
+    "twig/twig": "^2.7"
   },
   "require-dev": {
-    "doctrine/coding-standard": "^7.0",
+    "doctrine/coding-standard": "^8.0",
     "phpspec/phpspec": "^6.1"
   },
   "extra": {
@@ -34,5 +41,22 @@
     "psr-4": {
       "Cowegis\\Bundle\\Api\\": "src/"
     }
-  }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "spec\\Cowegis\\Bundle\\Api\\": "src/"
+    }
+  },
+  "repositories": [
+    {
+      "type": "path",
+      "url": "/home/netzmacht/Daten/Projekte/Entwicklung/vcs/cowegis/cowegis-geojson"
+    },
+    {
+      "type": "path",
+      "url": "/home/netzmacht/Daten/Projekte/Entwicklung/vcs/cowegis/cowegis-core"
+    }
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }

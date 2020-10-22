@@ -16,8 +16,12 @@ use GoldSpecDigital\ObjectOrientedOAS\OpenApi;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+
+use function array_values;
+use function count;
 use function is_array;
 use function iterator_to_array;
+
 use const JSON_UNESCAPED_SLASHES;
 
 final class SchemaAction
@@ -25,7 +29,10 @@ final class SchemaAction
     /** @var SchemaDescriber */
     private $schemaBuilder;
 
-    /** @var IdSchema[] */
+    /**
+     * @var IdSchema[]
+     * @psalm-var list<IdSchema>
+     */
     private $idSchemas;
 
     /** @var string */
@@ -34,6 +41,11 @@ final class SchemaAction
     /** @var string */
     private $apiVersion;
 
+    /**
+     * @param IdSchema[]|\Traversable $idSchemas
+     *
+     * @psalm-param list<IdSchema>|\Traversable<IdSchema> $idSchemas
+     */
     public function __construct(
         SchemaDescriber $schemaBuilder,
         iterable $idSchemas,
@@ -41,12 +53,12 @@ final class SchemaAction
         string $apiVersion
     ) {
         $this->schemaBuilder = $schemaBuilder;
-        $this->idSchemas     = is_array($idSchemas) ? $idSchemas : iterator_to_array($idSchemas);
+        $this->idSchemas     = array_values(is_array($idSchemas) ? $idSchemas : iterator_to_array($idSchemas));
         $this->baseUri       = $baseUri;
         $this->apiVersion    = $apiVersion;
     }
 
-    public function __invoke(Request $request) : Response
+    public function __invoke(Request $request): Response
     {
         $info = Info::create()
             ->title('Cowegis API')
@@ -67,7 +79,7 @@ final class SchemaAction
         return $response;
     }
 
-    private function idSchema() : SchemaContract
+    private function idSchema(): SchemaContract
     {
         switch (count($this->idSchemas)) {
             case 0:
@@ -78,7 +90,7 @@ final class SchemaAction
 
             default:
                 return OneOf::create()
-                    ->schemas(... $this->idSchemas);
+                    ->schemas(...$this->idSchemas);
         }
     }
 }
