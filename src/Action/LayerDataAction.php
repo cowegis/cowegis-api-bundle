@@ -64,7 +64,7 @@ final class LayerDataAction
         if (count($context->callbacks()) > 0) {
             $callbacksUrl = $this->router->generate(
                 'cowegis_api_js_layer_callbacks',
-                ['mapId' => $mapId->value(), 'layerId' => $layerId->value()]
+                ['mapId' => $mapId->value(), 'layerId' => $layerId->value(), 'es5' => $request->query->getBoolean('es5')]
             );
 
             $context->assets()->add(Asset::CALLBACKS($context->callbacks()->identifier(), $callbacksUrl));

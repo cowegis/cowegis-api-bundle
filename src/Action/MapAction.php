@@ -62,7 +62,10 @@ final class MapAction
         $definition = $this->provider->findMap($mapId, $context);
 
         if (count($context->callbacks()) > 0) {
-            $callbacksUrl = $this->router->generate('cowegis_api_js_map_callbacks', ['mapId' => $mapId->value()]);
+            $callbacksUrl = $this->router->generate(
+                'cowegis_api_js_map_callbacks',
+                ['mapId' => $mapId->value(), 'es5' => $request->query->getBoolean('es5')]
+            );
             $context->assets()->add(Asset::CALLBACKS($context->callbacks()->identifier(), $callbacksUrl));
         }
 

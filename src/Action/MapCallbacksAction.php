@@ -42,6 +42,12 @@ final class MapCallbacksAction
 
         $this->provider->findMap($mapId, $context);
 
-        return new Response($context->callbacks()->asJavascript(), 200, ['Content-Type' => 'application/javascript']);
+        if ($request->query->getBoolean('es5')) {
+            $javascript = $context->callbacks()->asEs5Javascript();
+        } else {
+            $javascript = $context->callbacks()->asJavascript();
+        }
+
+        return new Response($javascript, 200, ['Content-Type' => 'application/javascript']);
     }
 }
