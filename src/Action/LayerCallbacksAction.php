@@ -44,6 +44,12 @@ final class LayerCallbacksAction
 
         $this->provider->findLayerData($mapId, $layerId, $context);
 
-        return new Response($context->callbacks()->asJavascript(), 200, ['Content-Type' => 'application/javascript']);
+        if ($request->query->getBoolean('es5')) {
+            $javascript = $context->callbacks()->asEs5JAvascript();
+        } else {
+            $javascript = $context->callbacks()->asJavascript();
+        }
+
+        return new Response($javascript, 200, ['Content-Type' => 'application/javascript']);
     }
 }
