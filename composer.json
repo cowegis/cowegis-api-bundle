@@ -1,11 +1,11 @@
 {
   "name": "cowegis/cowegis-api-bundle",
-  "type": "symfony-bundle",
   "description": "Cowegis API Bundle - Content Web GIS API Bundle",
+  "license": "LGPL-3.0-or-later",
+  "type": "symfony-bundle",
   "keywords": [
     ""
   ],
-  "license": "LGPL-3.0-or-later",
   "authors": [
     {
       "name": "David Molineus",
@@ -13,7 +13,7 @@
     }
   ],
   "require": {
-    "php": "^7.2",
+    "php": "^7.4 || ^8.0",
     "ext-json": "*",
     "ext-pdo": "*",
     "beberlei/assert": "^3.2",
@@ -21,22 +21,25 @@
     "goldspecdigital/oooas": "^2.8",
     "psr/http-factory": "^1.0",
     "psr/http-message": "^1.0",
-    "symfony/config": "^4.4",
-    "symfony/dependency-injection": "^4.4",
-    "symfony/http-foundation": "^4.4",
-    "symfony/http-kernel": "^4.4",
-    "symfony/routing": "^4.4",
-    "twig/twig": "^2.7"
+    "symfony/config": "^4.4 || ^5.4",
+    "symfony/dependency-injection": "^4.4 || ^5.4",
+    "symfony/http-foundation": "^4.4 || ^5.4",
+    "symfony/http-kernel": "^4.4 || ^5.4",
+    "symfony/routing": "^4.4 || ^5.4",
+    "twig/twig": "^2.7 || ^3.0"
   },
   "require-dev": {
     "doctrine/coding-standard": "^8.0",
-    "phpspec/phpspec": "^6.1"
+    "phpspec/phpspec": "^6.1 || ^7.0"
   },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://token:ANU5iWbJuovTQ5j4Mre31crK5Dx36OscQ33uB7tzHtcDvTO55bAkRl8M8P0Mvp9r@packages.netzmacht.de/r/"
     }
-  },
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "autoload": {
     "psr-4": {
       "Cowegis\\Bundle\\Api\\": "src/"
@@ -47,16 +50,14 @@
       "spec\\Cowegis\\Bundle\\Api\\": "src/"
     }
   },
-  "repositories": [
-    {
-      "type": "path",
-      "url": "/home/netzmacht/Daten/Projekte/Entwicklung/vcs/cowegis/cowegis-geojson"
-    },
-    {
-      "type": "path",
-      "url": "/home/netzmacht/Daten/Projekte/Entwicklung/vcs/cowegis/cowegis-core"
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
     }
-  ],
-  "minimum-stability": "dev",
-  "prefer-stable": true
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  }
 }

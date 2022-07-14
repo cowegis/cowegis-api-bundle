@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 
+use function assert;
 use function count;
 
 final class MapAction
@@ -26,16 +27,13 @@ final class MapAction
     /** @var Serializer */
     private $serializer;
 
-    /** @var FilterFactory
-     */
+    /** @var FilterFactory */
     private $filterFactory;
 
     /**@var UriFactoryInterface */
     private $uriFactory;
 
-    /**
-     * @var RouterInterface
-     */
+    /** @var RouterInterface */
     private $router;
 
     public function __construct(
@@ -54,7 +52,9 @@ final class MapAction
 
     public function __invoke(string $mapId, Request $request): Response
     {
-        $mapId   = $this->provider->idFormat()->createDefinitionId(MapId::class, $mapId);
+        $mapId = $this->provider->idFormat()->createDefinitionId(MapId::class, $mapId);
+        assert($mapId instanceof MapId);
+
         $filter  = $this->filterFactory->createFromUri($this->uriFactory->createUri($request->getUri()));
         $locale  = $request->getLocale();
         $context = ProviderContext::create($filter, $mapId, $locale);

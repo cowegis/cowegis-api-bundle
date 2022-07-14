@@ -16,6 +16,7 @@ use GoldSpecDigital\ObjectOrientedOAS\OpenApi;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Traversable;
 
 use function array_values;
 use function count;
@@ -42,9 +43,9 @@ final class SchemaAction
     private $apiVersion;
 
     /**
-     * @param IdSchema[]|\Traversable $idSchemas
+     * @param IdSchema[]|Traversable $idSchemas
      *
-     * @psalm-param list<IdSchema>|\Traversable<IdSchema> $idSchemas
+     * @psalm-param list<IdSchema>|Traversable<IdSchema> $idSchemas
      */
     public function __construct(
         SchemaDescriber $schemaBuilder,

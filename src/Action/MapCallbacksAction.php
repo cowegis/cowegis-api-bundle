@@ -12,18 +12,16 @@ use Psr\Http\Message\UriFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use function assert;
+
 final class MapCallbacksAction
 {
     /** @var Provider */
     private $provider;
 
-    /**
-     * @var FilterFactory
-     */
+    /** @var FilterFactory */
     private $filterFactory;
-    /**
-     * @var UriFactoryInterface
-     */
+    /** @var UriFactoryInterface */
     private $uriFactory;
 
     public function __construct(Provider $mapProvider, FilterFactory $filterFactory, UriFactoryInterface $uriFactory)
@@ -35,7 +33,9 @@ final class MapCallbacksAction
 
     public function __invoke(string $mapId, Request $request): Response
     {
-        $mapId   = $this->provider->idFormat()->createDefinitionId(MapId::class, $mapId);
+        $mapId = $this->provider->idFormat()->createDefinitionId(MapId::class, $mapId);
+        assert($mapId instanceof MapId);
+
         $filter  = $this->filterFactory->createFromUri($this->uriFactory->createUri($request->getUri()));
         $locale  = $request->getLocale();
         $context = ProviderContext::create($filter, $mapId, $locale);

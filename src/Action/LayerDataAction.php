@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 
+use function assert;
 use function count;
 
 final class LayerDataAction
@@ -29,13 +30,9 @@ final class LayerDataAction
 
     /** @var Serializer */
     private $serializer;
-    /**
-     * @var UriFactoryInterface
-     */
+    /** @var UriFactoryInterface */
     private $uriFactory;
-    /**
-     * @var RouterInterface
-     */
+    /** @var RouterInterface */
     private $router;
 
     public function __construct(
@@ -54,17 +51,25 @@ final class LayerDataAction
 
     public function __invoke(string $mapId, string $layerId, Request $request): Response
     {
-        $mapId     = $this->provider->idFormat()->createDefinitionId(MapId::class, $mapId);
-        $layerId   = $this->provider->idFormat()->createDefinitionId(LayerId::class, $layerId);
-        $filter    = $this->filterFactory->createFromUri($this->uriFactory->createUri($request->getUri()));
-        $locale    = $request->getLocale();
+        $mapId   = $this->provider->idFormat()->createDefinitionId(MapId::class, $mapId);
+        $layerId = $this->provider->idFormat()->createDefinitionId(LayerId::class, $layerId);
+        $filter  = $this->filterFactory->createFromUri($this->uriFactory->createUri($request->getUri()));
+        $locale  = $request->getLocale();
+
+        assert($mapId instanceof MapId);
+        assert($layerId instanceof LayerId);
+
         $context   = LayerDataContext::create($filter, $mapId, $layerId, $locale);
         $layerData = $this->provider->findLayerData($mapId, $layerId, $context);
 
         if (count($context->callbacks()) > 0) {
             $callbacksUrl = $this->router->generate(
                 'cowegis_api_js_layer_callbacks',
-                ['mapId' => $mapId->value(), 'layerId' => $layerId->value(), 'es5' => $request->query->getBoolean('es5')]
+                [
+                    'mapId'   => $mapId->value(),
+                    'layerId' => $layerId->value(),
+                    'es5'     => $request->query->getBoolean('es5'),
+                ]
             );
 
             $context->assets()->add(Asset::CALLBACKS($context->callbacks()->identifier(), $callbacksUrl));

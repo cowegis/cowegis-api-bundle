@@ -13,18 +13,17 @@ use Psr\Http\Message\UriFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use function assert;
+
 final class LayerCallbacksAction
 {
     /** @var Provider */
     private $provider;
 
-    /**
-     * @var FilterFactory
-     */
+    /** @var FilterFactory */
     private $filterFactory;
-    /**
-     * @var UriFactoryInterface
-     */
+
+    /** @var UriFactoryInterface */
     private $uriFactory;
 
     public function __construct(Provider $mapProvider, FilterFactory $filterFactory, UriFactoryInterface $uriFactory)
@@ -40,6 +39,10 @@ final class LayerCallbacksAction
         $layerId = $this->provider->idFormat()->createDefinitionId(LayerId::class, $layerId);
         $filter  = $this->filterFactory->createFromUri($this->uriFactory->createUri($request->getUri()));
         $locale  = $request->getLocale();
+
+        assert($mapId instanceof MapId);
+        assert($layerId instanceof LayerId);
+
         $context = LayerDataContext::create($filter, $mapId, $layerId, $locale);
 
         $this->provider->findLayerData($mapId, $layerId, $context);
