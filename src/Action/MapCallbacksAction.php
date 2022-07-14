@@ -16,13 +16,10 @@ use function assert;
 
 final class MapCallbacksAction
 {
-    /** @var Provider */
-    private $provider;
+    private Provider $provider;
 
-    /** @var FilterFactory */
-    private $filterFactory;
-    /** @var UriFactoryInterface */
-    private $uriFactory;
+    private FilterFactory $filterFactory;
+    private UriFactoryInterface $uriFactory;
 
     public function __construct(Provider $mapProvider, FilterFactory $filterFactory, UriFactoryInterface $uriFactory)
     {

@@ -21,7 +21,6 @@ final class CowegisApiExtension extends Extension
 {
     /**
      * @param mixed[][] $configs
-     *
      * @psalm-param list<array<array-key, mixed>> $configs
      *
      * @psalm-suppress MoreSpecificImplementedParamType

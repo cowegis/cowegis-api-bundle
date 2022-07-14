@@ -27,24 +27,20 @@ use const JSON_UNESCAPED_SLASHES;
 
 final class SchemaAction
 {
-    /** @var SchemaDescriber */
-    private $schemaBuilder;
+    private SchemaDescriber $schemaBuilder;
 
     /**
      * @var IdSchema[]
      * @psalm-var list<IdSchema>
      */
-    private $idSchemas;
+    private array $idSchemas;
 
-    /** @var string */
-    private $baseUri;
+    private string $baseUri;
 
-    /** @var string */
-    private $apiVersion;
+    private string $apiVersion;
 
     /**
      * @param IdSchema[]|Traversable $idSchemas
-     *
      * @psalm-param list<IdSchema>|Traversable<IdSchema> $idSchemas
      */
     public function __construct(

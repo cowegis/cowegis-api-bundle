@@ -17,14 +17,11 @@ use function assert;
 
 final class LayerCallbacksAction
 {
-    /** @var Provider */
-    private $provider;
+    private Provider $provider;
 
-    /** @var FilterFactory */
-    private $filterFactory;
+    private FilterFactory $filterFactory;
 
-    /** @var UriFactoryInterface */
-    private $uriFactory;
+    private UriFactoryInterface $uriFactory;
 
     public function __construct(Provider $mapProvider, FilterFactory $filterFactory, UriFactoryInterface $uriFactory)
     {

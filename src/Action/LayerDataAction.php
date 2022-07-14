@@ -22,18 +22,13 @@ use function count;
 
 final class LayerDataAction
 {
-    /** @var Provider */
-    private $provider;
+    private Provider $provider;
 
-    /** @var FilterFactory */
-    private $filterFactory;
+    private FilterFactory $filterFactory;
 
-    /** @var Serializer */
-    private $serializer;
-    /** @var UriFactoryInterface */
-    private $uriFactory;
-    /** @var RouterInterface */
-    private $router;
+    private Serializer $serializer;
+    private UriFactoryInterface $uriFactory;
+    private RouterInterface $router;
 
     public function __construct(
         Provider $provider,

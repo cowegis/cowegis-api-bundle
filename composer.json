@@ -29,7 +29,7 @@
     "twig/twig": "^2.7 || ^3.0"
   },
   "require-dev": {
-    "doctrine/coding-standard": "^8.0",
+    "doctrine/coding-standard": "^9.0",
     "phpspec/phpspec": "^6.1 || ^7.0"
   },
   "repositories": [
