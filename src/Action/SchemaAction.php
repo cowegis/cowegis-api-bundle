@@ -66,9 +66,12 @@ final class SchemaAction
         $this->schemaBuilder->describe($builder);
 
         $schema = $builder->build();
-        $schema = $schema->servers(
-            Server::create()->url($request->getSchemeAndHttpHost() . '/' . $this->baseUri)
-        );
+
+        if ($schema->servers === null) {
+            $schema = $schema->servers(
+                Server::create()->url($request->getSchemeAndHttpHost() . '/' . $this->baseUri)
+            );
+        }
 
         $response = new JsonResponse($schema);
         $response->setEncodingOptions(JsonResponse::DEFAULT_ENCODING_OPTIONS | JSON_UNESCAPED_SLASHES);
