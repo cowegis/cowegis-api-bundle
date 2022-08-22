@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cowegis\Bundle\Api\Action;
 
+use Cowegis\Bundle\Api\Event\LayerDataResponseEvent;
 use Cowegis\Core\Definition\Layer\LayerId;
 use Cowegis\Core\Definition\Map\MapId;
 use Cowegis\Core\Filter\FilterFactory;
@@ -12,6 +13,7 @@ use Cowegis\Core\Provider\Provider;
 use Psr\Http\Message\UriFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 use function assert;
 
@@ -23,11 +25,18 @@ final class LayerCallbacksAction
 
     private UriFactoryInterface $uriFactory;
 
-    public function __construct(Provider $mapProvider, FilterFactory $filterFactory, UriFactoryInterface $uriFactory)
-    {
-        $this->provider      = $mapProvider;
-        $this->filterFactory = $filterFactory;
-        $this->uriFactory    = $uriFactory;
+    private EventDispatcherInterface $eventDispatcher;
+
+    public function __construct(
+        Provider $mapProvider,
+        FilterFactory $filterFactory,
+        UriFactoryInterface $uriFactory,
+        EventDispatcherInterface $eventDispatcher
+    ) {
+        $this->provider        = $mapProvider;
+        $this->filterFactory   = $filterFactory;
+        $this->uriFactory      = $uriFactory;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function __invoke(string $mapId, string $layerId, Request $request): Response
@@ -40,9 +49,8 @@ final class LayerCallbacksAction
         assert($mapId instanceof MapId);
         assert($layerId instanceof LayerId);
 
-        $context = LayerDataContext::create($filter, $mapId, $layerId, $locale);
-
-        $this->provider->findLayerData($mapId, $layerId, $context);
+        $context   = LayerDataContext::create($filter, $mapId, $layerId, $locale);
+        $layerData = $this->provider->findLayerData($mapId, $layerId, $context);
 
         if ($request->query->getBoolean('es5')) {
             $javascript = $context->callbacks()->asEs5Javascript();
@@ -50,6 +58,9 @@ final class LayerCallbacksAction
             $javascript = $context->callbacks()->asJavascript();
         }
 
-        return new Response($javascript, 200, ['Content-Type' => 'application/javascript']);
+        $response = new Response($javascript, 200, ['Content-Type' => 'application/javascript']);
+        $this->eventDispatcher->dispatch(new LayerDataResponseEvent($layerData, $response));
+
+        return $response;
     }
 }

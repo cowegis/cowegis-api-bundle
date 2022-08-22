@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cowegis\Bundle\Api\Action;
 
+use Cowegis\Bundle\Api\Event\LayerDataResponseEvent;
 use Cowegis\Core\Definition\Asset\Asset;
 use Cowegis\Core\Definition\Layer\LayerId;
 use Cowegis\Core\Definition\Map\MapId;
@@ -16,6 +17,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 use function assert;
 use function count;
@@ -27,21 +29,27 @@ final class LayerDataAction
     private FilterFactory $filterFactory;
 
     private Serializer $serializer;
+
     private UriFactoryInterface $uriFactory;
+
     private RouterInterface $router;
+
+    private EventDispatcherInterface $eventDispatcher;
 
     public function __construct(
         Provider $provider,
         FilterFactory $filterFactory,
         Serializer $serializer,
         UriFactoryInterface $uriFactory,
-        RouterInterface $router
+        RouterInterface $router,
+        EventDispatcherInterface $eventDispatcher
     ) {
-        $this->provider      = $provider;
-        $this->serializer    = $serializer;
-        $this->filterFactory = $filterFactory;
-        $this->uriFactory    = $uriFactory;
-        $this->router        = $router;
+        $this->provider        = $provider;
+        $this->serializer      = $serializer;
+        $this->filterFactory   = $filterFactory;
+        $this->uriFactory      = $uriFactory;
+        $this->router          = $router;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function __invoke(string $mapId, string $layerId, Request $request): Response
@@ -70,11 +78,14 @@ final class LayerDataAction
             $context->assets()->add(Asset::CALLBACKS($context->callbacks()->identifier(), $callbacksUrl));
         }
 
-        return new JsonResponse(
+        $response = new JsonResponse(
             [
                 'data'   => $this->serializer->serialize($layerData),
                 'assets' => $this->serializer->serialize($context->assets()->toArray()),
             ]
         );
+        $this->eventDispatcher->dispatch(new LayerDataResponseEvent($layerData, $response));
+
+        return $response;
     }
 }

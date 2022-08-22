@@ -75,15 +75,9 @@ tasks:
   phpcpd:
     plugin: phpcpd
     config:
-    #  exclude:
-    #  names:
-    #  names_exclude:
-    #  regexps_exclude:
-    #  log:
-    #  min_lines:
-    #  min_tokens:
-    #  fuzzy: true
-    #  custom_flags:
+      exclude:
+        - src/Action/LayerCallbacksAction.php
+        - src/Action/LayerDataAction.php
 
   phpmd:
     plugin: phpmd

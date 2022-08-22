@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cowegis\Bundle\Api\Action;
 
+use Cowegis\Bundle\Api\Event\MapResponseEvent;
 use Cowegis\Core\Definition\Asset\Asset;
 use Cowegis\Core\Definition\Map\MapId;
 use Cowegis\Core\Filter\FilterFactory;
@@ -15,6 +16,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 use function assert;
 use function count;
@@ -31,18 +33,22 @@ final class MapAction
 
     private RouterInterface $router;
 
+    private EventDispatcherInterface $eventDispatcher;
+
     public function __construct(
         Provider $provider,
         FilterFactory $filterFactory,
         Serializer $serializer,
         UriFactoryInterface $uriFactory,
-        RouterInterface $router
+        RouterInterface $router,
+        EventDispatcherInterface $eventDispatcher
     ) {
-        $this->provider      = $provider;
-        $this->serializer    = $serializer;
-        $this->filterFactory = $filterFactory;
-        $this->uriFactory    = $uriFactory;
-        $this->router        = $router;
+        $this->provider        = $provider;
+        $this->serializer      = $serializer;
+        $this->filterFactory   = $filterFactory;
+        $this->uriFactory      = $uriFactory;
+        $this->router          = $router;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function __invoke(string $mapId, Request $request): Response
@@ -70,6 +76,9 @@ final class MapAction
             'assets' => $this->serializer->serialize($context->assets()->toArray()),
         ];
 
-        return new JsonResponse($data);
+        $response = new JsonResponse($data);
+        $this->eventDispatcher->dispatch(new MapResponseEvent($definition, $response));
+
+        return $response;
     }
 }

@@ -27,6 +27,7 @@
             <!-- Todo: Use own uri factory -->
             <argument type="service" id="psr18.http_client" />
             <argument type="service" id="router" />
+            <argument type="service" id="event_dispatcher"/>
         </service>
 
         <service id="Cowegis\Bundle\Api\Action\LayerDataAction" public="true">
@@ -36,6 +37,7 @@
             <!-- Todo: Use own uri factory -->
             <argument type="service" id="psr18.http_client" />
             <argument type="service" id="router" />
+            <argument type="service" id="event_dispatcher"/>
         </service>
 
         <service id="Cowegis\Bundle\Api\Action\MapCallbacksAction" public="true">
@@ -43,6 +45,7 @@
             <argument type="service" id="Cowegis\Core\Filter\FilterFactory" />
             <!-- Todo: Use own uri factory -->
             <argument type="service" id="psr18.http_client" />
+            <argument type="service" id="event_dispatcher"/>
         </service>
 
         <service id="Cowegis\Bundle\Api\Action\LayerCallbacksAction" public="true">
@@ -50,6 +53,7 @@
             <argument type="service" id="Cowegis\Core\Filter\FilterFactory" />
             <!-- Todo: Use own uri factory -->
             <argument type="service" id="psr18.http_client" />
+            <argument type="service" id="event_dispatcher"/>
         </service>
 
         <!-- Services -->
