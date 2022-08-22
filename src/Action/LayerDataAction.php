@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Cowegis\Bundle\Api\Action;
 
-use Cowegis\Bundle\Api\Event\LayerDataResponseEvent;
+use Cowegis\Bundle\Api\Event\LayerResponseEvent;
 use Cowegis\Core\Definition\Asset\Asset;
 use Cowegis\Core\Definition\Layer\LayerId;
 use Cowegis\Core\Definition\Map\MapId;
@@ -84,7 +84,7 @@ final class LayerDataAction
                 'assets' => $this->serializer->serialize($context->assets()->toArray()),
             ]
         );
-        $this->eventDispatcher->dispatch(new LayerDataResponseEvent($layerData, $response));
+        $this->eventDispatcher->dispatch(new LayerResponseEvent($mapId, $layerId, $response));
 
         return $response;
     }
