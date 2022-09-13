@@ -21,5 +21,9 @@
             <tag name="Cowegis\Core\Schema\SchemaDescriber" />
         </service>
 
+        <service id="Cowegis\Core\Schema\GeoDataSchemaDescriber">
+            <tag name="Cowegis\Core\Schema\SchemaDescriber"/>
+        </service>
+
     </services>
 </container>
