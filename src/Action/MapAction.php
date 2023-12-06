@@ -23,32 +23,14 @@ use function count;
 
 final class MapAction
 {
-    private Provider $provider;
-
-    private Serializer $serializer;
-
-    private FilterFactory $filterFactory;
-
-    private UriFactoryInterface $uriFactory;
-
-    private RouterInterface $router;
-
-    private EventDispatcherInterface $eventDispatcher;
-
     public function __construct(
-        Provider $provider,
-        FilterFactory $filterFactory,
-        Serializer $serializer,
-        UriFactoryInterface $uriFactory,
-        RouterInterface $router,
-        EventDispatcherInterface $eventDispatcher
+        private readonly Provider $provider,
+        private readonly FilterFactory $filterFactory,
+        private readonly Serializer $serializer,
+        private readonly UriFactoryInterface $uriFactory,
+        private readonly RouterInterface $router,
+        private readonly EventDispatcherInterface $eventDispatcher,
     ) {
-        $this->provider        = $provider;
-        $this->serializer      = $serializer;
-        $this->filterFactory   = $filterFactory;
-        $this->uriFactory      = $uriFactory;
-        $this->router          = $router;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function __invoke(string $mapId, Request $request): Response
@@ -65,7 +47,7 @@ final class MapAction
         if (count($context->callbacks()) > 0) {
             $callbacksUrl = $this->router->generate(
                 'cowegis_api_js_map_callbacks',
-                ['mapId' => $mapId->value(), 'es5' => $request->query->getBoolean('es5')]
+                ['mapId' => $mapId->value(), 'es5' => $request->query->getBoolean('es5')],
             );
             $context->assets()->add(Asset::CALLBACKS($context->callbacks()->identifier(), $callbacksUrl));
         }

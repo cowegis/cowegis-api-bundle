@@ -24,7 +24,7 @@ final class ExceptionConverterListener
             case DataNotFound::class:
             case MapNotFound::class:
             case LayerNotFound::class:
-                $event->setThrowable(new NotFoundHttpException(null, $exception));
+                $event->setThrowable(new NotFoundHttpException('', $exception));
                 break;
 
             case InvalidArgument::class:

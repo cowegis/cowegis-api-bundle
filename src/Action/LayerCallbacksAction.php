@@ -19,24 +19,12 @@ use function assert;
 
 final class LayerCallbacksAction
 {
-    private Provider $provider;
-
-    private FilterFactory $filterFactory;
-
-    private UriFactoryInterface $uriFactory;
-
-    private EventDispatcherInterface $eventDispatcher;
-
     public function __construct(
-        Provider $mapProvider,
-        FilterFactory $filterFactory,
-        UriFactoryInterface $uriFactory,
-        EventDispatcherInterface $eventDispatcher
+        private readonly Provider $provider,
+        private readonly FilterFactory $filterFactory,
+        private readonly UriFactoryInterface $uriFactory,
+        private readonly EventDispatcherInterface $eventDispatcher,
     ) {
-        $this->provider        = $mapProvider;
-        $this->filterFactory   = $filterFactory;
-        $this->uriFactory      = $uriFactory;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function __invoke(string $mapId, string $layerId, Request $request): Response

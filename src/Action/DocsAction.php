@@ -10,14 +10,8 @@ use Twig\Environment;
 
 final class DocsAction
 {
-    private Environment $twig;
-
-    private RouterInterface $router;
-
-    public function __construct(Environment $twig, RouterInterface $router)
+    public function __construct(private readonly Environment $twig, private readonly RouterInterface $router)
     {
-        $this->twig   = $twig;
-        $this->router = $router;
     }
 
     public function __invoke(): Response
@@ -25,10 +19,8 @@ final class DocsAction
         return new Response(
             $this->twig->render(
                 '@CowegisApi/index.html.twig',
-                [
-                    'schemaUri' => $this->router->generate('cowegis_api_docs_schema'),
-                ]
-            )
+                ['schemaUri' => $this->router->generate('cowegis_api_docs_schema')],
+            ),
         );
     }
 }

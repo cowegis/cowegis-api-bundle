@@ -24,32 +24,14 @@ use function count;
 
 final class LayerDataAction
 {
-    private Provider $provider;
-
-    private FilterFactory $filterFactory;
-
-    private Serializer $serializer;
-
-    private UriFactoryInterface $uriFactory;
-
-    private RouterInterface $router;
-
-    private EventDispatcherInterface $eventDispatcher;
-
     public function __construct(
-        Provider $provider,
-        FilterFactory $filterFactory,
-        Serializer $serializer,
-        UriFactoryInterface $uriFactory,
-        RouterInterface $router,
-        EventDispatcherInterface $eventDispatcher
+        private readonly Provider $provider,
+        private readonly FilterFactory $filterFactory,
+        private readonly Serializer $serializer,
+        private readonly UriFactoryInterface $uriFactory,
+        private readonly RouterInterface $router,
+        private readonly EventDispatcherInterface $eventDispatcher,
     ) {
-        $this->provider        = $provider;
-        $this->serializer      = $serializer;
-        $this->filterFactory   = $filterFactory;
-        $this->uriFactory      = $uriFactory;
-        $this->router          = $router;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function __invoke(string $mapId, string $layerId, Request $request): Response
@@ -72,7 +54,7 @@ final class LayerDataAction
                     'mapId'   => $mapId->value(),
                     'layerId' => $layerId->value(),
                     'es5'     => $request->query->getBoolean('es5'),
-                ]
+                ],
             );
 
             $context->assets()->add(Asset::CALLBACKS($context->callbacks()->identifier(), $callbacksUrl));
@@ -82,7 +64,7 @@ final class LayerDataAction
             [
                 'data'   => $this->serializer->serialize($layerData),
                 'assets' => $this->serializer->serialize($context->assets()->toArray()),
-            ]
+            ],
         );
         $this->eventDispatcher->dispatch(new LayerResponseEvent($mapId, $layerId, $response));
 

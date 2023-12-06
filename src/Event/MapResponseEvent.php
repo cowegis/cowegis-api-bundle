@@ -9,14 +9,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class MapResponseEvent
 {
-    private Map $definition;
-
-    private Response $response;
-
-    public function __construct(Map $definition, Response $response)
+    public function __construct(private readonly Map $definition, private readonly Response $response)
     {
-        $this->definition = $definition;
-        $this->response   = $response;
     }
 
     public function definition(): Map

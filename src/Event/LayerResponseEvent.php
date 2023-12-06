@@ -10,17 +10,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class LayerResponseEvent
 {
-    private MapId $mapId;
-
-    private LayerId $layerId;
-
-    private Response $response;
-
-    public function __construct(MapId $mapId, LayerId $layerId, Response $response)
-    {
-        $this->mapId    = $mapId;
-        $this->layerId  = $layerId;
-        $this->response = $response;
+    public function __construct(
+        private readonly MapId $mapId,
+        private readonly LayerId $layerId,
+        private readonly Response $response,
+    ) {
     }
 
     public function response(): Response

@@ -27,32 +27,20 @@ use const JSON_UNESCAPED_SLASHES;
 
 final class SchemaAction
 {
-    private SchemaDescriber $schemaBuilder;
-
-    /**
-     * @var IdSchema[]
-     * @psalm-var list<IdSchema>
-     */
+    /** @var list<IdSchema> */
     private array $idSchemas;
-
-    private string $baseUri;
-
-    private string $apiVersion;
 
     /**
      * @param IdSchema[]|Traversable $idSchemas
      * @psalm-param list<IdSchema>|Traversable<IdSchema> $idSchemas
      */
     public function __construct(
-        SchemaDescriber $schemaBuilder,
+        private readonly SchemaDescriber $schemaBuilder,
         iterable $idSchemas,
-        string $baseUri,
-        string $apiVersion
+        private readonly string $baseUri,
+        private readonly string $apiVersion,
     ) {
-        $this->schemaBuilder = $schemaBuilder;
-        $this->idSchemas     = array_values(is_array($idSchemas) ? $idSchemas : iterator_to_array($idSchemas));
-        $this->baseUri       = $baseUri;
-        $this->apiVersion    = $apiVersion;
+        $this->idSchemas = array_values(is_array($idSchemas) ? $idSchemas : iterator_to_array($idSchemas));
     }
 
     public function __invoke(Request $request): Response
@@ -68,9 +56,7 @@ final class SchemaAction
         $schema = $builder->build();
 
         if ($schema->servers === null) {
-            $schema = $schema->servers(
-                Server::create()->url($request->getSchemeAndHttpHost() . '/' . $this->baseUri)
-            );
+            $schema = $schema->servers(Server::create()->url($request->getSchemeAndHttpHost() . '/' . $this->baseUri));
         }
 
         $response = new JsonResponse($schema);
@@ -89,8 +75,7 @@ final class SchemaAction
                 return $this->idSchemas[0];
 
             default:
-                return OneOf::create()
-                    ->schemas(...$this->idSchemas);
+                return OneOf::create()->schemas(...$this->idSchemas);
         }
     }
 }
