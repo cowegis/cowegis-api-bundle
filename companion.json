@@ -1,0 +1,28 @@
+{
+  "receipts": ["projects/library"],
+  "config": {
+    "phpConstraint": "^8.2"
+  },
+  "tools": {
+    "phpcq": {
+      "plugins": {
+        "phpunit": false,
+        "phpspec": true
+      },
+      "presets": {
+        "phpcpd": {
+          "tasks": {
+            "phpcpd": {
+              "config": {
+                "exclude": [
+                  "src/Action/LayerCallbacksAction.php",
+                  "src/Action/LayerDataAction.php"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
