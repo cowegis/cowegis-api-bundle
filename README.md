@@ -4,7 +4,7 @@ This is the base symfony bundle providing the API entrypoints of the cowegis pro
 
 ## Requirements
 
-- PHP `^7.2`
+- PHP `^8.2`
 
 ## Install
 
