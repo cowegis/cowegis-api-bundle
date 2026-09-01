@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=../../../../../vendor/symfony/dependency-injection/Loader/schema/services.schema.json
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Cowegis\Core\Schema\SchemaDescriber:
+    class: Cowegis\Core\Schema\DelegatingSchemaDescriber
+    arguments:
+      - !tagged_iterator { tag: Cowegis\Core\Schema\SchemaDescriber }
+
+  Cowegis\Core\Schema\MapSchemaDescriber:
+    arguments:
+      - !tagged_iterator { tag: Cowegis\Core\Schema\LayerSchemaDescriber }
+      - !tagged_iterator { tag: Cowegis\Core\Schema\ControlSchemaDescriber }
+    tags:
+      - { name: Cowegis\Core\Schema\SchemaDescriber }
+
+  Cowegis\Core\Schema\GeoJsonDescriber:
+    tags:
+      - { name: Cowegis\Core\Schema\SchemaDescriber }
+
+  Cowegis\Core\Schema\GeoDataSchemaDescriber:
+    tags:
+      - { name: Cowegis\Core\Schema\SchemaDescriber }

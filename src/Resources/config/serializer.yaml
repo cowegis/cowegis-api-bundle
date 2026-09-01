@@ -1,0 +1,138 @@
+# yaml-language-server: $schema=../../../../../vendor/symfony/dependency-injection/Loader/schema/services.schema.json
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Cowegis\Core\Serializer\Serializer" class="Cowegis\Core\Serializer\DelegatingSerializer:
+    arguments:
+      - !tagged_locator { tag: Cowegis\Core\Serializer\Serializer, index-by: key }
+
+  Cowegis\Core\Serializer\EventDispatchingSerializer" decorates="Cowegis\Core\Serializer\Serializer:
+    arguments:
+      - '@Cowegis\Core\Serializer\EventDispatchingSerializer.inner'
+      - '@event_dispatcher'
+
+  Cowegis\Core\Serializer\ArraySerializer:
+    arguments:
+      - '@Cowegis\Core\Serializer\Serializer'
+    tags:
+      - { name: Cowegis\Core\Serializer\Serializer, key: array }
+      - { name: Cowegis\Core\Serializer\Serializer, key: ArrayObject }
+
+  Cowegis\Core\Serializer\MapSerializer:
+    arguments:
+      - '@Cowegis\Core\Serializer\Serializer'
+    tags:
+      - { name: Cowegis\Core\Serializer\Serializer, key: Cowegis\Core\Definition\Map\Map }
+
+  Cowegis\Core\Serializer\PresetsSerializer:
+    arguments:
+      - '@Cowegis\Core\Serializer\Serializer'
+    tags:
+      - { name: Cowegis\Core\Serializer\Serializer, key: Cowegis\Core\Definition\Map\Presets }
+
+  Cowegis\Core\Serializer\PopupPresetSerializer:
+    arguments:
+      - '@Cowegis\Core\Serializer\Serializer'
+    tags:
+      - { name: Cowegis\Core\Serializer\Serializer, key: Cowegis\Core\Definition\Preset\PopupPreset }
+
+  Cowegis\Core\Serializer\OptionsSerializer:
+    arguments:
+      - '@Cowegis\Core\Serializer\Serializer'
+    tags:
+      - { name: Cowegis\Core\Serializer\Serializer, key: Cowegis\Core\Definition\Map\Options }
+
+  Cowegis\Core\Serializer\PopupSerializer:
+    arguments:
+      - '@Cowegis\Core\Serializer\Serializer'
+    tags:
+      - { name: Cowegis\Core\Serializer\Serializer, key: Cowegis\Core\Definition\UI\Popup }
+
+  cowegis.core.serializer.div_icon_serializer:
+    class: Cowegis\Core\Serializer\IconSerializer
+    arguments:
+      - 'div'
+      - '@Cowegis\Core\Serializer\Serializer'
+    tags:
+      - { name: Cowegis\Core\Serializer\Serializer, key: Cowegis\Core\Definition\Icon\DivIcon }
+
+  cowegis.core.serializer.image_icon_serializer:
+    class: Cowegis\Core\Serializer\IconSerializer
+    arguments:
+      - 'image'
+      - '@Cowegis\Core\Serializer\Serializer'
+    tags:
+      - { name: Cowegis\Core\Serializer\Serializer, key: Cowegis\Core\Definition\Icon\ImageIcon }
+
+  cowegis.core.serializer.svg_icon_serializer:
+    class: Cowegis\Core\Serializer\IconSerializer
+    arguments:
+      - 'svg'
+      - '@Cowegis\Core\Serializer\Serializer'
+    tags:
+      - { name: Cowegis\Core\Serializer\Serializer, key: Cowegis\Core\Definition\Icon\SvgIcon }
+
+  cowegis.core.serializer.font_awesome_icon_serializer:
+    class: Cowegis\Core\Serializer\IconSerializer
+    arguments:
+      - 'fontAwesome'
+      - '@Cowegis\Core\Serializer\Serializer'
+    tags:
+      - { name: Cowegis\Core\Serializer\Serializer, key: Cowegis\Core\Definition\Icon\FontAwesomeIcon }
+
+  Cowegis\Core\Serializer\Layer\MarkerClusterGroupSerializer:
+    arguments:
+      - '@Cowegis\Core\Serializer\Serializer'
+    tags:
+      - { name: Cowegis\Core\Serializer\Serializer, key: Cowegis\Core\Definition\Layer\MarkerClusterGroup }
+
+  Cowegis\Core\Serializer\Layer\LayerIdsSerializer:
+    arguments:
+      - '@Cowegis\Core\Serializer\Serializer'
+    tags:
+      - { name: Cowegis\Core\Serializer\Serializer, key: Cowegis\Core\Definition\Layer\LayerIds }
+
+  Cowegis\Core\Serializer\Layer\FeatureGroupSerializer:
+    arguments:
+      - '@Cowegis\Core\Serializer\Serializer'
+    tags:
+      - { name: Cowegis\Core\Serializer\Serializer, key: Cowegis\Core\Definition\Layer\FeatureGroup }
+
+  Cowegis\Core\Serializer\Layer\LayerGroupSerializer:
+    arguments:
+      - '@Cowegis\Core\Serializer\Serializer'
+    tags:
+      - { name: Cowegis\Core\Serializer\Serializer, key: Cowegis\Core\Definition\Layer\LayerGroup }
+
+  Cowegis\Core\Serializer\Layer\OverpassLayerSerializer:
+    arguments:
+      - '@Cowegis\Core\Serializer\Serializer'
+    tags:
+      - { name: Cowegis\Core\Serializer\Serializer, key: Cowegis\Core\Definition\Layer\OverpassLayer }
+
+  Cowegis\Core\Serializer\Layer\ProviderLayerSerializer:
+    arguments:
+      - '@Cowegis\Core\Serializer\Serializer'
+    tags:
+      - { name: Cowegis\Core\Serializer\Serializer, key: Cowegis\Core\Definition\Layer\ProviderLayer }
+
+  Cowegis\Core\Serializer\Control\LayersControlSerializer:
+    arguments:
+      - '@Cowegis\Core\Serializer\Serializer'
+    tags:
+      - { name: Cowegis\Core\Serializer\Serializer, key: Cowegis\Core\Definition\Control\LayersControl }
+
+  Cowegis\Core\Serializer\TooltipSerializer:
+    arguments:
+      - '@Cowegis\Core\Serializer\Serializer'
+    tags:
+      - { name: Cowegis\Core\Serializer\Serializer, key: Cowegis\Core\Definition\UI\Tooltip }
+
+  Cowegis\Core\Serializer\TooltipPresetSerializer:
+    arguments:
+      - '@Cowegis\Core\Serializer\Serializer'
+    tags:
+      - { name: Cowegis\Core\Serializer\Serializer, key: Cowegis\Core\Definition\Preset\TooltipPreset }

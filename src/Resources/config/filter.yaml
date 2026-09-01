@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../../../../vendor/symfony/dependency-injection/Loader/schema/services.schema.json
+services:
+  _defaults:
+     autowire: true
+     autoconfigure: true
+     public: false
+
+  Cowegis\Core\Filter\FilterFactory:
+    arguments:
+      - !tagged_iterator { tag: Cowegis\Core\Filter\RuleFactory }
+
+  Cowegis\Core\Filter\Rule\DistanceRuleFactory:
+    tags:
+      - Cowegis\Core\Filter\RuleFactory
+
+  Cowegis\Core\Filter\Rule\KeywordRuleFactory:
+    tags:
+      - Cowegis\Core\Filter\RuleFactory
+
+  Cowegis\Core\Filter\Rule\BboxRuleFactory:
+    tags:
+      - Cowegis\Core\Filter\RuleFactory

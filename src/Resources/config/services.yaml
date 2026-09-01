@@ -1,0 +1,76 @@
+# yaml-language-server: $schema=../../../../../vendor/symfony/dependency-injection/Loader/schema/services.schema.json
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  # Controller
+  Cowegis\Bundle\Api\Action\SchemaAction:
+    public: true
+    arguments:
+      - '@Cowegis\Core\Schema\SchemaDescriber'
+      - !tagged_iterator { tag: Cowegis\Core\Schema\IdSchema }
+      - '%cowegis_api.api_base_uri%'
+      - '%cowegis_api.api_version%'
+
+  Cowegis\Bundle\Api\Action\DocsAction:
+    public: true
+    arguments:
+      - '@twig'
+      - '@router'
+
+  Cowegis\Bundle\Api\Action\MapAction:
+    public: true
+    arguments:
+      - '@Cowegis\Core\Provider\Provider'
+      - '@Cowegis\Core\Filter\FilterFactory'
+      - '@Cowegis\Core\Serializer\Serializer'
+      # Todo: Use own uri factory
+      - '@psr18.http_client'
+      - '@router'
+      - '@event_dispatcher'
+
+  Cowegis\Bundle\Api\Action\LayerDataAction:
+    public: true
+    arguments:
+      - '@Cowegis\Core\Provider\Provider'
+      - '@Cowegis\Core\Filter\FilterFactory'
+      - '@Cowegis\Core\Serializer\Serializer'
+      # Todo: Use own uri factory
+      - '@psr18.http_client'
+      - '@router'
+      - '@event_dispatcher'
+
+  Cowegis\Bundle\Api\Action\MapCallbacksAction:
+    public: true
+    arguments:
+      - '@Cowegis\Core\Provider\Provider'
+      - '@Cowegis\Core\Filter\FilterFactory'
+      # Todo: Use own uri factory
+      - '@psr18.http_client'
+      - '@event_dispatcher'
+
+  Cowegis\Bundle\Api\Action\LayerCallbacksAction:
+    public: true
+    arguments:
+      - '@Cowegis\Core\Provider\Provider'
+      - '@Cowegis\Core\Filter\FilterFactory'
+      # Todo: Use own uri factory
+      - '@psr18.http_client'
+      - '@event_dispatcher'
+
+  # Services
+  Cowegis\Core\Provider\Provider:
+    class: Cowegis\Core\Provider\DelegatingProvider
+    arguments:
+      - !tagged_iterator { tag: Cowegis\Core\Provider\Provider }
+
+  # Listeners
+  Cowegis\Bundle\Api\EventListener\LocaleListener:
+    tags:
+      - { name: kernel.event_listener, event: kernel.request, priority: 20 }
+
+  Cowegis\Bundle\Api\EventListener\ExceptionConverterListener:
+    tags:
+      - { name: kernel.event_listener, event: kernel.exception, priority: 20 }
