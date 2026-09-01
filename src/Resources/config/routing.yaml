@@ -1,0 +1,41 @@
+cowegis_api_docs_index:
+  path: /docs
+  controller: Cowegis\Bundle\Api\Action\DocsAction
+  methods: GET
+  defaults:
+    _cowegis: docs
+
+cowegis_api_docs_schema:
+  path: /docs/schema.json
+  controller: Cowegis\Bundle\Api\Action\SchemaAction
+  methods: GET
+  defaults:
+    _cowegis: docs
+
+cowegis_api_map:
+  path: /api/map/{mapId}
+  controller: Cowegis\Bundle\Api\Action\MapAction
+  methods: GET
+  defaults:
+    _cowegis: api
+
+cowegis_api_layer_data:
+  path: /api/map/{mapId}/{type}/{layerId}
+  controller: Cowegis\Bundle\Api\Action\LayerDataAction
+  methods: GET
+  defaults:
+    _cowegis: api
+
+cowegis_api_js_map_callbacks:
+  path: /js/callbacks/{mapId}.js
+  controller: Cowegis\Bundle\Api\Action\MapCallbacksAction
+  methods: GET
+  defaults:
+    _cowegis: api
+
+cowegis_api_js_layer_callbacks:
+  path: /js/callbacks/{mapId}/{layerId}.js
+  controller: Cowegis\Bundle\Api\Action\LayerCallbacksAction
+  methods: GET
+  defaults:
+    _cowegis: api
