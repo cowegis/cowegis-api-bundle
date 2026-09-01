@@ -15,7 +15,6 @@ use GoldSpecDigital\ObjectOrientedOAS\Objects\Server;
 use GoldSpecDigital\ObjectOrientedOAS\OpenApi;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Traversable;
 
 use function array_values;
@@ -43,7 +42,7 @@ final class SchemaAction
         $this->idSchemas = array_values(is_array($idSchemas) ? $idSchemas : iterator_to_array($idSchemas));
     }
 
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request): JsonResponse
     {
         $info = Info::create()
             ->title('Cowegis API')

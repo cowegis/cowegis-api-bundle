@@ -15,7 +15,6 @@ use Cowegis\Core\Serializer\Serializer;
 use Psr\Http\Message\UriFactoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
@@ -34,7 +33,7 @@ final class LayerDataAction
     ) {
     }
 
-    public function __invoke(string $mapId, string $layerId, Request $request): Response
+    public function __invoke(string $mapId, string $layerId, Request $request): JsonResponse
     {
         $mapId   = $this->provider->idFormat()->createDefinitionId(MapId::class, $mapId);
         $layerId = $this->provider->idFormat()->createDefinitionId(LayerId::class, $layerId);
