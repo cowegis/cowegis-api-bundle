@@ -45,7 +45,7 @@ services:
     arguments:
       - '@Cowegis\Core\Serializer\Serializer'
     tags:
-      - { name: Cowegis\Core\Serializer\Serializer, key: Cowegis\Core\Definition\Map\Options }
+      - { name: Cowegis\Core\Serializer\Serializer, key: Cowegis\Core\Definition\Options }
 
   Cowegis\Core\Serializer\PopupSerializer:
     arguments:
