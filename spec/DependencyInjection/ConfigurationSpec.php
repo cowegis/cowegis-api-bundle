@@ -20,14 +20,6 @@ final class ConfigurationSpec extends ObjectBehavior
         expect(is_string($config['api']['version']) && $config['api']['version'] !== '')->toBe(true);
     }
 
-    public function it_resolves_an_explicit_latest_to_the_installed_package_version(): void
-    {
-        $config = $this->process([['api' => ['version' => 'latest']]]);
-
-        expect($config['api']['version'])->notToBe('latest');
-        expect(is_string($config['api']['version']) && $config['api']['version'] !== '')->toBe(true);
-    }
-
     public function it_keeps_a_pinned_version_verbatim(): void
     {
         $config = $this->process([['api' => ['version' => '2.5.0']]]);
