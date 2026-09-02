@@ -5,11 +5,13 @@ services:
     autoconfigure: true
     public: false
 
-  Cowegis\Core\Serializer\Serializer" class="Cowegis\Core\Serializer\DelegatingSerializer:
+  Cowegis\Core\Serializer\Serializer:
+    class: Cowegis\Core\Serializer\DelegatingSerializer
     arguments:
       - !tagged_locator { tag: Cowegis\Core\Serializer\Serializer, index_by: key }
 
-  Cowegis\Core\Serializer\EventDispatchingSerializer" decorates="Cowegis\Core\Serializer\Serializer:
+  Cowegis\Core\Serializer\EventDispatchingSerializer:
+    decorates: Cowegis\Core\Serializer\Serializer
     arguments:
       - '@Cowegis\Core\Serializer\EventDispatchingSerializer.inner'
       - '@event_dispatcher'
