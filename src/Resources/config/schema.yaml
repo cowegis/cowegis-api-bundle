@@ -24,3 +24,7 @@ services:
   Cowegis\Core\Schema\GeoDataSchemaDescriber:
     tags:
       - { name: Cowegis\Core\Schema\SchemaDescriber }
+
+  Cowegis\Core\Schema\Error\ErrorSchemaDescriber:
+    tags:
+      - { name: Cowegis\Core\Schema\SchemaDescriber }

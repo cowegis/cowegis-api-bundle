@@ -19,7 +19,7 @@
     "ext-json": "*",
     "ext-pdo": "*",
     "beberlei/assert": "^3.2",
-    "cowegis/cowegis-core": "^1.0",
+    "cowegis/cowegis-core": "dev-master",
     "goldspecdigital/oooas": "^2.8",
     "psr/http-factory": "^1.0",
     "psr/http-message": "^1.0",
