@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cowegis\Bundle\Api\Action;
 
+use Composer\InstalledVersions;
 use Cowegis\Core\Exception\RuntimeException;
 use Cowegis\Core\Schema\IdSchema;
 use Cowegis\Core\Schema\SchemaBuilder;
@@ -47,7 +48,7 @@ final class SchemaAction
         $info = Info::create()
             ->title('Cowegis API')
             ->description('Cowegis map API')
-            ->version($this->apiVersion);
+            ->version($this->resolveVersion());
 
         $builder = SchemaBuilder::create($info, $this->idSchema(), OpenApi::OPENAPI_3_0_2);
         $this->schemaBuilder->describe($builder);
@@ -62,6 +63,17 @@ final class SchemaAction
         $response->setEncodingOptions(JsonResponse::DEFAULT_ENCODING_OPTIONS | JSON_UNESCAPED_SLASHES);
 
         return $response;
+    }
+
+    private function resolveVersion(): string
+    {
+        if ($this->apiVersion !== 'latest') {
+            return $this->apiVersion;
+        }
+
+        $version = InstalledVersions::getPrettyVersion('cowegis/cowegis-api-bundle');
+
+        return $version ?? 'dev';
     }
 
     private function idSchema(): SchemaContract

@@ -20,8 +20,9 @@ final class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('version')
-                            ->info('API version. Cowegis has a dynamic API schema caused by the plugin structure.'
-                                . ' You may force a version')
+                            ->info('API version reported in the generated OpenAPI document. The default'
+                                . ' "latest" is resolved at runtime to the installed cowegis/cowegis-api-bundle'
+                                . ' version. Set a fixed string to pin it.')
                             ->defaultValue('latest')
                         ->end()
                         ->scalarNode('prefix')

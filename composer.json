@@ -18,6 +18,7 @@
     "php": "^8.3",
     "ext-json": "*",
     "ext-pdo": "*",
+    "composer-runtime-api": "^2.0",
     "beberlei/assert": "^3.2",
     "cowegis/cowegis-core": "dev-master",
     "goldspecdigital/oooas": "^2.8",
