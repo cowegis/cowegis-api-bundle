@@ -33,6 +33,7 @@
     "twig/twig": "^3.0"
   },
   "require-dev": {
+    "friends-of-phpspec/phpspec-expect": "^4.0",
     "netzmacht/phpspec-phpcq-plugin": "@dev",
     "phpcq/runner-bootstrap": "@dev",
     "phpspec/phpspec": "^6.0 || ^7.0 || ^8.0"
@@ -46,7 +47,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "spec\\Cowegis\\Bundle\\Api\\": "src/"
+      "spec\\Cowegis\\Bundle\\Api\\": "spec/"
     }
   },
   "config": {
